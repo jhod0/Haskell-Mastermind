@@ -1,6 +1,6 @@
 # Haskell-Mastermind
 
-A simple, command-line game of [Mastermind](http:/http://en.wikipedia.org/wiki/Mastermind_%28board_game%29).
+A simple, command-line game of [Mastermind](http:/http://en.wikipedia.org/wiki/Mastermind).
 
 If this is something that interests you, feel free to 
 use any part of this however you wish!
