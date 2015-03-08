@@ -48,12 +48,24 @@ newBoard = do
 -----------------------------------------------
 
 
+-- Overall structure:
+-- 	The user-chosen board is modelid as a list of 
+-- Ints, where 0 means the first Peg in codePegs (from
+-- Mastermind.Pegs), 1 means the second from codePegs,
+-- and so on.
+
+
+-- Converts a list of four Ints into a 
+-- Mastermind board
 boardFromNs :: [Int] -> Board
 boardFromNs ls = if length ls /= 4 then error $ "Wrong board size: " ++ show ls else
 		let [p1,p2,p3,p4] = map (codePegs!!) ls in
 			Board p1 p2 p3 p4
 
 
+-- The funcs incN and decN just shift
+-- the color at a given position
+-- in a board-list.
 applytoN :: (a -> a) -> Int -> [a] -> [a]
 applytoN _ _   []   = []
 applytoN f 0 (a:xs) = f a:xs
@@ -65,11 +77,17 @@ incN = applytoN (\n -> (n+1) `mod` nPegs)
 decN :: Int -> [Int] -> [Int]
 decN = applytoN (\n -> (n-1) `mod` nPegs)
 
+
+
 -- printBoard prints a board with the nth
 -- peg underlined
 printBoard :: Int -> Board -> IO ()
 printBoard n b = putStr $ "\r\t" ++ underlineNth n b
 
+
+-- 	Allows the user to alter their guess board.
+-- Argument <n> is which board position is currently highlighted,
+-- and <b> is a [Int] specifying the current board guess.
 chooseBoard :: Int -> [Int] -> IO [Int]
 chooseBoard n b = do
 		printBoard n $ boardFromNs b
@@ -84,6 +102,10 @@ chooseBoard n b = do
 			Nothing -> return b
 
 
+
+-- 	Takes a Board key, an initial guess [Int], and
+-- a turn number, and plays the game until the user
+-- guesses the key.
 playBoard :: Board -> [Int] -> Int -> IO ()
 playBoard key guess n = do
 	putStrLn $ "============ Turn " ++ show n ++ " ==========="
@@ -101,6 +123,7 @@ playBoard key guess n = do
 			putStrLn $ concatMap show diff
 			putStrLn ""
 			playBoard key g (1+n)
+
 
 -- Generates a new board and plays Mastermind
 playGame :: IO ()

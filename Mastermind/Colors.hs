@@ -2,6 +2,13 @@ module Mastermind.Colors (
 Color(..),
 ) where
 
+{- 
+ - This module defines data types of various
+ - ANSI terminal color stuff. Works to color
+ - things on Linux, not sure about anything
+ - else.
+ -}
+
 
 data Color = ColorEnd | Bold | Weak | Italic | Underline | Strikethrough
 			| Blackbgrnd | Redbgrnd | Yellowbgrnd | Bluebgrnd

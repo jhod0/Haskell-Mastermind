@@ -17,12 +17,16 @@ import System.IO
 -}
 
 
--- Type for Arrow Keys
+-- Data type for Arrow Keys.
 -- L,R rather than Left,
 -- Right to avoid conflict
 -- with Either monad
 data ArrowKey = U | D | L | R deriving Show
 
+
+-- Parses an Arrow key from stdin
+-- If arrow key pressed: IO (Just ArrowKey)
+-- If no arrow pressed:  IO Nothing
 getKey :: IO (Maybe ArrowKey)
 getKey = do
 	hSetEcho stdout False
@@ -30,12 +34,14 @@ getKey = do
 	c <- getChar
 	case c of
 		'\ESC'  -> parseArrow
-		'\n'	-> return Nothing
+		'\n'	-> return Nothing  -- Return Nothing on newline
 		_	-> do n <- getChar
 			      case n of 
 				'\ESC' -> parseArrow
 				_	-> return Nothing
 
+
+-- Helper function for getKey
 parseArrow :: IO (Maybe ArrowKey)
 parseArrow = do
 	c <- getChar
