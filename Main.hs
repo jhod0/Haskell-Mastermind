@@ -1,3 +1,5 @@
+#!/usr/bin/env runghc
+
 module Main where
 
 import Mastermind.Game
@@ -26,13 +28,13 @@ introMessage = unlines ["============================================",
 	""]
 
 
-greeting :: IO ()
-greeting = putStrLn introMessage
+greet :: IO ()
+greet = putStrLn introMessage
 
 
 main :: IO ()
 main = do
-	greeting
+	greet
 	putStrLn "Press any key to begin..."
 	getChar
 	playGame

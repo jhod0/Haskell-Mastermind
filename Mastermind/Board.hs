@@ -62,14 +62,10 @@ almost = Peg White
 
 nOverlap :: Board -> Board -> Int
 nOverlap guess key = let gmap = boardToMap guess
-			 kmap = boardToMap key in
+			 kmap = boardToMap key 
+			in
 			sum $ map snd $ M.toList $ 
-			M.intersectionWith (\g k -> if g == 0
-					then 0
-					else case compare g k of
-						GT -> k
-						EQ -> k
-						LT -> g) gmap kmap
+			M.intersectionWith min gmap kmap
 -- Yields the number of exactly correct pegs,
 -- i.e., pegs which have the correct color
 -- and correct position.

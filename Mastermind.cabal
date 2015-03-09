@@ -17,4 +17,4 @@ cabal-version:       >=1.8
 executable Mastermind
   main-is:             Main.hs
   -- other-modules:       
-  build-depends:       base ==4.6.*, random ==1.0.*, containers ==0.5.*
+  build-depends:       base >=4.6, random ==1.0.*, containers ==0.5.*

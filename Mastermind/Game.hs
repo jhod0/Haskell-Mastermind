@@ -29,10 +29,8 @@ nPegs = length codePegs
 -- Returns a list of four
 -- randomly selected pegs
 getPegs :: StdGen -> [Peg]
-getPegs gen = getPegs' gen 4 
-	where getPegs' _ 0 = []
-	      getPegs' g num = let (n,ng) = randomR (0,nPegs-1) g in 
-				codePegs !! n:getPegs' ng (num-1)
+getPegs gen = fmap (codePegs !!) randomPegs
+	where randomPegs = take 4 $ randomRs (0,3) gen
 
 -- Generates a new board
 newBoard :: IO Board
@@ -66,16 +64,18 @@ boardFromNs ls = if length ls /= 4 then error $ "Wrong board size: " ++ show ls 
 -- The funcs incN and decN just shift
 -- the color at a given position
 -- in a board-list.
-applytoN :: (a -> a) -> Int -> [a] -> [a]
-applytoN _ _   []   = []
-applytoN f 0 (a:xs) = f a:xs
-applytoN f n (a:xs) = a:applytoN f (n-1) xs
+modifyAt :: (a -> a) -> Int -> [a] -> [a]
+modifyAt f ind l = 
+	case splitAt ind l of 
+	(prefix, x:suffix) -> prefix ++ f x :suffix
+	(prefix, [])       -> prefix
+
 
 incN :: Int -> [Int] -> [Int]
-incN = applytoN (\n -> (n+1) `mod` nPegs)
+incN = modifyAt (\n -> (n+1) `mod` nPegs)
 
 decN :: Int -> [Int] -> [Int]
-decN = applytoN (\n -> (n-1) `mod` nPegs)
+decN = modifyAt (\n -> (n-1) `mod` nPegs)
 
 
 

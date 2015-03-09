@@ -34,11 +34,8 @@ getKey = do
 	c <- getChar
 	case c of
 		'\ESC'  -> parseArrow
-		'\n'	-> return Nothing  -- Return Nothing on newline
-		_	-> do n <- getChar
-			      case n of 
-				'\ESC' -> parseArrow
-				_	-> return Nothing
+		'\n'	-> return Nothing
+		_	-> getKey
 
 
 -- Helper function for getKey
@@ -47,7 +44,7 @@ parseArrow = do
 	c <- getChar
 	case c of 
 		'\ESC' -> parseArrow
-		'[' -> do l <- getChar 
+		'[' -> do l <- getChar
 			  case l of 
 				'A' -> return $ Just U
 				'B' -> return $ Just D
