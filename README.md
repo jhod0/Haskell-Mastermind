@@ -12,6 +12,9 @@ This is a tiny project, and there are no dependencies, other than the Haskell co
 To compile, simply:
 `ghc Main.hs -o MASTERMIND`
 
+Or, for system-wide: `cabal install`
+
+Or for one-time use: `runghc Main.hs`
 
 
 I have only tried this on Linux (Mint), and I suspect the colors will not work properly on any other platform
